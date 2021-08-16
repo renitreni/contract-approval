@@ -30,7 +30,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         Route::post('/approved/table', [ContractController::class, 'approvedTable'])->name('contracts.table.approved');
         Route::post('/approve/contract', [ContractController::class, 'approveContract'])->name('contracts.approval');
     });
-    Route::prefix('my-contracts')->group(function () {
+    Route::prefix('mycontracts')->group(function () {
         Route::get('/', [MyContractController::class, 'index'])->name('my.contracts')->middleware(['can:my-contracts']);
         Route::post('/table', [MyContractController::class, 'table'])->name('my.contracts.table');
         Route::post('/store', [MyContractController::class, 'store'])->name('my.contracts.store');

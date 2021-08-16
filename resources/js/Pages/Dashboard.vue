@@ -39,7 +39,7 @@
         props: ['data'],
         data() {
             return {
-                keyword: 'CA210816260208',
+                keyword: '',
                 overview: {}
             };
         },

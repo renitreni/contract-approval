@@ -8,7 +8,8 @@
                     <div class="d-table-cell align-middle">
 
                         <div class="text-center mt-4">
-                            <h1 class="h2">Welcome back!</h1>
+                            <img src="{{ asset('img/polo-logo-thumb.png') }}" width="20%">
+                            <h1 class="h2">POLO KSA Contract Assessment</h1>
                             <p class="lead">
                                 Sign in to your account to continue
                             </p>

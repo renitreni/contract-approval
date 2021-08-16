@@ -9,11 +9,7 @@ use App\Http\Controllers\SettingsPrivacyController;
 use \App\Http\Controllers\ContractController;
 
 Route::get('/', function () {
-    if(auth()->check() && auth()->user()->isAn('User')) {
-        return redirect()->route('my.contracts');
-    } else {
-        return redirect()->route('home');
-    }
+    return redirect()->route('home');
 });
 
 Auth::routes();

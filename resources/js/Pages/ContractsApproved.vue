@@ -30,9 +30,10 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-auto m-1 border p-3" v-for="item in contents">
-                                <span class="me-4">{{ item.label }}</span>
-                                <button class="btn btn-primary" @click="viewImage(item.value)">View</button>
+                            <div class="row justify-content-md-center">
+                                <div class="col-md-6 border p-3 d-flex flex-column" v-for="item in contents">
+                                    <button class="btn btn-primary" @click="viewImage(item.value)">{{ item.label }}</button>
+                                </div>
                             </div>
                         </div>
                     </div>

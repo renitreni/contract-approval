@@ -9,6 +9,7 @@ use App\Models\Files;
 use Silber\Bouncer\Bouncer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UsersStoreRequest;
 
 class UsersController extends Controller
@@ -64,7 +65,7 @@ class UsersController extends Controller
             'password' => 'required|confirmed',
         ]);
 
-        User::updateOrCreate(["id" => $request->id], ["password" => $request->password,]);
+        User::updateOrCreate(["id" => $request->id], ["password" => Hash::make($request->password),]);
 
         return ['success' => true];
     }

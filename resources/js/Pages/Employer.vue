@@ -86,7 +86,7 @@
 
 <script>
 export default {
-    name: "Company",
+    name: "Employer",
     props: ['data'],
     data() {
         return {

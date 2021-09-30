@@ -3,6 +3,7 @@
 use App\Http\Controllers\CaseManagementController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\OfficialCaseController;
 use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -27,7 +28,9 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     });
 
     Route::prefix('cases')->group(function () {
-
+        Route::get('/', [OfficialCaseController::class, 'index'])->name('cases')->middleware(['can:case-management']);
+        Route::post('/store', [OfficialCaseController::class, 'store'])->name('cases.store');
+        Route::post('/table/companies', [OfficialCaseController::class, 'table'])->name('cases.table');
     });
 
     Route::prefix('company')->group(function () {

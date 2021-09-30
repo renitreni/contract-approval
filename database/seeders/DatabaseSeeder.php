@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Company;
 use App\Models\Employer;
+use App\Models\OfficialCase;
 use App\Models\User;
 use App\Models\Worker;
 use Silber\Bouncer\Bouncer;
@@ -66,5 +67,6 @@ class DatabaseSeeder extends Seeder
         Company::factory()->count(50)->create();
         Worker::factory()->count(50)->create();
         Employer::factory()->count(50)->create();
+        OfficialCase::factory()->count(200)->create();
     }
 }

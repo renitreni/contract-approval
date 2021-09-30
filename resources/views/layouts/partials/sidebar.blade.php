@@ -29,16 +29,16 @@
             @can('case-management')
                 <li class="sidebar-item">
                     <a href="#case-management" data-bs-toggle="collapse"
-                       class="sidebar-link show collapsed" aria-expanded="false"
+                       class="sidebar-link" role="button" aria-expanded="false"
                     >
                         <i class="fas fa-ribbon"></i>
                         Case Management
                         </span>
                     </a>
-                    <ul id="case-management" class="sidebar-dropdown list-unstyled collapse"
+                    <ul id="case-management" class="sidebar-dropdown list-unstyled"
                         data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('contracts.pending') }}">
+                            <a class="sidebar-link" href="{{ route('cases') }}">
                                 Cases
                             </a>
                         </li>

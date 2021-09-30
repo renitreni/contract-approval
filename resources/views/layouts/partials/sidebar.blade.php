@@ -12,7 +12,7 @@
             @can('home')
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('home') }}">
-                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                       <i class="fas fa-tachometer-alt"></i><span class="align-middle">Dashboard</span>
                     </a>
                 </li>
             @endcan
@@ -20,8 +20,8 @@
             @can('my-contracts')
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('my.contracts') }}">
-                        <i class="align-middle" data-feather="clipboard"></i> <span
-                            class="align-middle">My Contracts</span>
+                        <i class="fas fa-file-contract"></i>
+                        <span class="align-middle">My Contracts</span>
                     </a>
                 </li>
             @endcan
@@ -66,7 +66,8 @@
                     <a href="#contracts" data-bs-toggle="collapse"
                        class="sidebar-link show collapsed" aria-expanded="false"
                     >
-                        <i class="align-middle" data-feather="folder"></i> <span class="align-middle">Contracts</span>
+                        <i class="fas fa-file-signature"></i>
+                        <span class="align-middle">Contracts</span>
                     </a>
                     <ul id="contracts" class="sidebar-dropdown list-unstyled collapse"
                         data-bs-parent="#sidebar">
@@ -90,7 +91,8 @@
                     <a href="#manage-users" data-bs-toggle="collapse"
                        class="sidebar-link show collapsed" aria-expanded="false"
                     >
-                        <i class="align-middle" data-feather="users"></i> <span class="align-middle">Manage Users</span>
+                        <i class="fas fa-users"></i>
+                        <span class="align-middle">Manage Users</span>
                     </a>
                     <ul id="manage-users" class="sidebar-dropdown list-unstyled collapse"
                         data-bs-parent="#sidebar">

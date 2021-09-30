@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\CaseManagementController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsersController;
@@ -18,14 +22,38 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('home')->middleware(['can:home']);
         Route::post('/contract/search', [DashboardController::class, 'searchContract'])
-             ->name('search.contract')
-             ->middleware(['can:home']);
+            ->name('search.contract')
+            ->middleware(['can:home']);
     });
+
+    Route::prefix('cases')->group(function () {
+
+    });
+
+    Route::prefix('company')->group(function () {
+        Route::get('/', [CompanyController::class, 'index'])->name('company')->middleware(['can:case-management']);
+        Route::post('/store', [CompanyController::class, 'store'])->name('company.store');
+        Route::post('/table/companies', [CompanyController::class, 'table'])->name('company.table');
+    });
+
+    Route::prefix('worker')->group(function () {
+        Route::get('/', [WorkerController::class, 'index'])->name('worker')->middleware(['can:case-management']);
+        Route::post('/store', [WorkerController::class, 'store'])->name('worker.store');
+        Route::post('/table', [WorkerController::class, 'table'])->name('worker.table');
+    });
+
+    Route::prefix('employer')->group(function () {
+        Route::get('/', [EmployerController::class, 'index'])->name('employer')->middleware(['can:case-management']);
+        Route::post('/store', [EmployerController::class, 'store'])->name('employer.store');
+        Route::post('/table', [EmployerController::class, 'table'])->name('employer.table');
+    });
+
     Route::prefix('contracts')->group(function () {
-        Route::get('/', [ContractController::class, 'index'])->name('contracts.pending')->middleware(['can:contracts']);
+        Route::get('/', [ContractController::class, 'index'])->name('contracts.pending')
+            ->middleware(['can:contracts']);
         Route::get('/approved', [ContractController::class, 'indexApproved'])
-             ->name('contracts.approved')
-             ->middleware(['can:contracts']);
+            ->name('contracts.approved')
+            ->middleware(['can:contracts']);
         Route::post('/pending/table', [ContractController::class, 'pendingTable'])->name('contracts.table.pending');
         Route::post('/approved/table', [ContractController::class, 'approvedTable'])->name('contracts.table.approved');
         Route::post('/approve/contract', [ContractController::class, 'approveContract'])->name('contracts.approval');

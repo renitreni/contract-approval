@@ -26,6 +26,41 @@
                 </li>
             @endcan
 
+            @can('case-management')
+                <li class="sidebar-item">
+                    <a href="#case-management" data-bs-toggle="collapse"
+                       class="sidebar-link show collapsed" aria-expanded="false"
+                    >
+                        <i class="fas fa-ribbon"></i>
+                        Case Management
+                        </span>
+                    </a>
+                    <ul id="case-management" class="sidebar-dropdown list-unstyled collapse"
+                        data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('contracts.pending') }}">
+                                Cases
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('company') }}">
+                                Company
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('worker') }}">
+                                Worker
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('employer') }}">
+                                Employer
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
+
             @can('contracts')
                 <li class="sidebar-item">
                     <a href="#contracts" data-bs-toggle="collapse"
@@ -40,8 +75,8 @@
                                 Pending
                                 <span
                                     class="top-0 start-100 translate-middle badge rounded-pill bg-danger">
-    {{ \App\Models\Contract::fetchPendingCount() }}
-  </span>
+                                    {{ \App\Models\Contract::fetchPendingCount() }}
+                                </span>
                             </a>
                         </li>
                         <li class="sidebar-item">

@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
+use App\Models\Employer;
 use App\Models\User;
+use App\Models\Worker;
 use Silber\Bouncer\Bouncer;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -58,5 +61,10 @@ class DatabaseSeeder extends Seeder
             'title' => 'Roles',
         ]);
         $bouncer->allow($admin)->to($roles);
+        $bouncer->allow($admin)->everything();
+
+        Company::factory()->count(50)->create();
+        Worker::factory()->count(50)->create();
+        Employer::factory()->count(50)->create();
     }
 }

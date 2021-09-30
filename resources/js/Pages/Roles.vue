@@ -61,6 +61,10 @@
                         <h5 class="my-2">Manage Users</h5>
                         <div class="d-flex flex-wrap">
                             <div class="form-check form-switch me-3">
+                                <input class="form-check-input" type="checkbox" value="case-management" v-model="overview.abilities">
+                                <label class="form-check-label">Case Management</label>
+                            </div>
+                            <div class="form-check form-switch me-3">
                                 <input class="form-check-input" type="checkbox" value="home" v-model="overview.abilities">
                                 <label class="form-check-label">Dashboard</label>
                             </div>

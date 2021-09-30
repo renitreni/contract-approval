@@ -37,14 +37,14 @@ class MyContractController extends Controller
     public function table(User $user)
     {
         return DataTables::of(Contract::query()->where('created_by', auth()->id())->with(['audit']))
-                         ->setTransformer(function ($data) use ($user) {
-                             $data               = collect($data)->toArray();
-                             $data["created_at"] = Carbon::parse($data["created_at"])->format("F j, Y");
-                             $data["updated_at"] = Carbon::parse($data["updated_at"])->format("F j, Y");
+            ->setTransformer(function ($data) use ($user) {
+                $data = collect($data)->toArray();
+                $data["created_at"] = Carbon::parse($data["created_at"])->format("F j, Y");
+                $data["updated_at"] = Carbon::parse($data["updated_at"])->format("F j, Y");
 
-                             return $data;
-                         })
-                         ->make(true);
+                return $data;
+            })
+            ->make(true);
     }
 
     public function store(MyContractStoreRequest $request)
@@ -52,7 +52,7 @@ class MyContractController extends Controller
         $attr = [];
         foreach ($request->details as $detail) {
             if ($detail['value']) {
-                $path   = Storage::put('contracts', $detail['value']);
+                $path = Storage::put('contracts', $detail['value']);
                 $attr[] = [
                     "label" => $detail['label'],
                     "name"  => $detail['name'],
@@ -66,24 +66,24 @@ class MyContractController extends Controller
             'content'    => json_encode($attr),
         ]);
 
-        $custom_id   = 'CA' . Carbon::now()->format('ymd');
+        $custom_id = 'CA'.Carbon::now()->format('ymd');
         $custom_id_2 = Carbon::now()->format('hm');
-        $final_id    = $custom_id . $contract->id . $custom_id_2;
+        $final_id = $custom_id.$contract->id.$custom_id_2;
         Contract::where('id', $contract->id)->update(['custom_id' => $final_id]);
 
         ContractAudit::create([
             'contract_id' => $contract->id,
             'status'      => 'pending',
-            'notes'       => 'Submitted by: ' . auth()->user()->name,
+            'notes'       => 'Submitted by: '.auth()->user()->name,
         ]);
 
         Mail::send([], [], function ($message) use ($contract, $final_id) {
             //->cc([auth()->user()->email])
             $message->to(User::getAdminEmails())
-                    ->from([env('MAIL_USERNAME')])
-                    ->subject('New Contract For Approval!')
-                    ->setBody("<h2>Hi Admins,</h2><br> <h3>New Contract No.: {$final_id} has been submitted!</h3>",
-                        'text/html');
+                ->from([env('MAIL_USERNAME')])
+                ->subject('New Contract For Approval!')
+                ->setBody("<h2>Hi Admins,</h2><br> <h3>New Contract No.: {$final_id} has been submitted!</h3>",
+                    'text/html');
         });
 
         return Redirect::route('my.contracts');

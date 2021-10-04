@@ -44,7 +44,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{{ route('company') }}">
-                                Company
+                                Company / Agency
                             </a>
                         </li>
                         <li class="sidebar-item">

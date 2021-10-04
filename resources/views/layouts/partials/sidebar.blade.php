@@ -2,6 +2,8 @@
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" style="text-decoration: unset;" href="{{ route('home') }}">
             <span class="align-middle">{{ env('APP_NAME') }}</span>
+            <br>
+            <small class="text-muted fw-light text-sm">Case Management Deployment</small>
         </a>
 
         <ul class="sidebar-nav">

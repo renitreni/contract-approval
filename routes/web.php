@@ -23,9 +23,8 @@ Auth::routes();
 Route::group(['middleware' => ['web', 'auth']], function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('home')->middleware(['can:home']);
-        Route::post('/contract/search', [DashboardController::class, 'searchContract'])
-            ->name('search.contract')
-            ->middleware(['can:home']);
+        Route::post('/contract/search', [DashboardController::class, 'searchContract'])->name('search.contract');
+        Route::post('/case/search', [DashboardController::class, 'searchCase'])->name('search.case');
     });
 
     Route::prefix('cases')->group(function () {

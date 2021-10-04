@@ -1,33 +1,33 @@
 <template>
-    <div>
-        <div class="d-flex flex-column">
-            <div>
-                <label>Contract Checker</label>
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            <div class="d-flex flex-column">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Type in Contract No."
-                           aria-label="Recipient's username" aria-describedby="button-addon2" v-model="keyword">
-                    <button class="btn btn-primary" type="button" id="button-addon2" @click="search">Search</button>
+                    <input type="text" class="form-control" aria-label="Text input with dropdown button"
+                           v-model="cases.keyword" placeholder="Type In Keyword...">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Search Type: <b>{{ cases.drop_down }}</b>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" @click="cases.drop_down = 'Company'">Company</a></li>
+                        <li><a class="dropdown-item" href="#" @click="cases.drop_down = 'Worker'">Worker</a></li>
+                        <li><a class="dropdown-item" href="#" @click="cases.drop_down = 'Employer'">Employer</a></li>
+                    </ul>
+                    <button class="btn btn-primary" type="button" @click="searchCase">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </div>
             </div>
-            <div>
-                <div class="card" v-if="overview.type">
-                    <div class="card-body">
-                        <div class="d-flex flex-column">
-                            <div>
-                                <h2>{{ overview.type }}</h2>
-                            </div>
-                            <div>
-                                <span>Submitted By: <strong>{{ overview.creator.name }} ({{ overview.creator.email}})</strong></span>
-                            </div>
-                            <div>
-                                <span>Status:
-                                    <strong v-for="item in overview.audit">
-                                        <span class="badge bg-primary">{{ item.status }}</span>
-                                    </strong>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap">
+        <div v-for="item in case_results" class="mx-2 align-content-end">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.atnsia_no }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ item.status }}</h6>
+                    <p class="card-text">{{ item.complaint }}</p>
                 </div>
             </div>
         </div>
@@ -35,21 +35,30 @@
 </template>
 
 <script>
-    export default {
-        props: ['data'],
-        data() {
-            return {
+export default {
+    props: ['data'],
+    data() {
+        return {
+            keyword: '',
+            cases: {
                 keyword: '',
-                overview: {}
-            };
+                drop_down: 'Company',
+            },
+            case_results : []
+        };
+    },
+    methods: {
+        searchContract() {
+            var $this = this;
+            axios.post(this.data.search_contract, {keyword: this.keyword}).then(function (value) {
+            });
         },
-        methods: {
-            search() {
-                var $this = this;
-                axios.post(this.data.search_contract, {keyword: this.keyword}).then(function (value) {
-                    $this.overview = value.data;
-                });
-            }
+        searchCase() {
+            var $this = this;
+            axios.post(this.data.search_cases, $this.cases).then(function (value) {
+                $this.case_results = value.data;
+            });
         }
     }
+}
 </script>

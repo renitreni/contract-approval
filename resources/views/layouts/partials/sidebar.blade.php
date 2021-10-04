@@ -17,14 +17,14 @@
                 </li>
             @endcan
 
-            @can('my-contracts')
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('my.contracts') }}">
-                        <i class="fas fa-file-contract"></i>
-                        <span class="align-middle">My Contracts</span>
-                    </a>
-                </li>
-            @endcan
+{{--            @can('my-contracts')--}}
+{{--                <li class="sidebar-item">--}}
+{{--                    <a class="sidebar-link" href="{{ route('my.contracts') }}">--}}
+{{--                        <i class="fas fa-file-contract"></i>--}}
+{{--                        <span class="align-middle">My Contracts</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--            @endcan--}}
 
             @can('case-management')
                 <li class="sidebar-item">
@@ -61,30 +61,30 @@
                 </li>
             @endcan
 
-            @can('contracts')
-                <li class="sidebar-item">
-                    <a href="#contracts" data-bs-toggle="collapse"
-                       class="sidebar-link show collapsed" aria-expanded="false"
-                    >
-                        <i class="fas fa-file-signature"></i>
-                        <span class="align-middle">Contracts</span>
-                    </a>
-                    <ul id="contracts" class="sidebar-dropdown list-unstyled collapse"
-                        data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('contracts.pending') }}">
-                                Pending
-                                <span
-                                    class="top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ \App\Models\Contract::fetchPendingCount() }}
-                                </span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('contracts.approved') }}">Approved</a></li>
-                    </ul>
-                </li>
-            @endcan
+{{--            @can('contracts')--}}
+{{--                <li class="sidebar-item">--}}
+{{--                    <a href="#contracts" data-bs-toggle="collapse"--}}
+{{--                       class="sidebar-link show collapsed" aria-expanded="false"--}}
+{{--                    >--}}
+{{--                        <i class="fas fa-file-signature"></i>--}}
+{{--                        <span class="align-middle">Contracts</span>--}}
+{{--                    </a>--}}
+{{--                    <ul id="contracts" class="sidebar-dropdown list-unstyled collapse"--}}
+{{--                        data-bs-parent="#sidebar">--}}
+{{--                        <li class="sidebar-item">--}}
+{{--                            <a class="sidebar-link" href="{{ route('contracts.pending') }}">--}}
+{{--                                Pending--}}
+{{--                                <span--}}
+{{--                                    class="top-0 start-100 translate-middle badge rounded-pill bg-danger">--}}
+{{--                                    {{ \App\Models\Contract::fetchPendingCount() }}--}}
+{{--                                </span>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="sidebar-item">--}}
+{{--                            <a class="sidebar-link" href="{{ route('contracts.approved') }}">Approved</a></li>--}}
+{{--                    </ul>--}}
+{{--                </li>--}}
+{{--            @endcan--}}
 
             @can('manage-users')
                 <li class="sidebar-item">

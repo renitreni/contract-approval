@@ -56,7 +56,7 @@
                                     <select id="select2-worker" class="form-select select2"></select>
                                 </div>
                                 <div class="col-sm-12 col-lg-6">
-                                    <label>ATNSIA No.</label>
+                                    <label>Case No.</label>
                                     <input type="number" class="form-control" v-model="overview.atnsia_no">
                                 </div>
                                 <div class="col-sm-12 col-lg-6">
@@ -195,7 +195,7 @@ export default {
                 {"data": "days_suspended", "name": "days_suspended", "title": "Days Suspended"},
                 {"data": "case_officer", "name": "case_officer", "title": "Case Officer"},
                 {"data": "full_name", "name": "worker.last_name", "title": "Worker"},
-                {"data": "atnsia_no", "name": "worker.atnsia_no", "title": "ATNSIA No."},
+                {"data": "atnsia_no", "name": "worker.atnsia_no", "title": "Case No."},
             ],
             drawCallback: function (settings) {
                 $('.btn-name').on('click', function () {

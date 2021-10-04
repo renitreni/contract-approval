@@ -59,6 +59,10 @@
                                     <label>ATNSIA No.</label>
                                     <input type="number" class="form-control" v-model="overview.atnsia_no">
                                 </div>
+                                <div class="col-sm-12 col-lg-6">
+                                    <label>Case Officer</label>
+                                    <input type="text" class="form-control" v-model="overview.case_officer">
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 mb-1">

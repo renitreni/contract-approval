@@ -18,5 +18,6 @@ class Company extends Model
         'email',
         'iqama',
         'type',
+        'cr_no',
     ];
 }

@@ -41,6 +41,7 @@ class CompanyController extends Controller
                 "email"       => $request->email,
                 "iqama"       => $request->iqama,
                 "type"        => $request->type,
+                "cr_no"       => $request->cr_no,
             ]);
 
         return ['success' => true];

@@ -22,6 +22,7 @@ class CreateCompaniesTable extends Migration
             $table->string('email')->nullable();
             $table->string('iqama')->nullable();
             $table->string('type')->nullable();
+            $table->string('cr_no')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

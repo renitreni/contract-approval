@@ -28,6 +28,7 @@ class CompanyFactory extends Factory
             'phone'       => $this->faker->phoneNumber(),
             'email'       => $this->faker->companyEmail(),
             'iqama'       => $this->faker->creditCardNumber(),
+            'cr_no'       => $this->faker->creditCardNumber(),
             'type'        => $this->faker->randomElement(['sra', 'pra', 'company']),
         ];
     }

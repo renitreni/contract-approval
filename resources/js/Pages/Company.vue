@@ -49,6 +49,10 @@
                                     <label>IQAMA / National ID</label>
                                     <input type="text" class="form-control" v-model="overview.iqama">
                                 </div>
+                                <div class="mb-3 flex-grow-1">
+                                    <label>CR No.</label>
+                                    <input type="text" class="form-control" v-model="overview.cr_no">
+                                </div>
                             </div>
                             <div class="d-flex flex-row">
                                 <div class="mb-3 flex-grow-1 me-4">
@@ -105,6 +109,7 @@ export default {
                 iqama: '',
                 type: '',
                 title: '',
+                cr_no: '',
             },
             companyFormMdl: null,
         }

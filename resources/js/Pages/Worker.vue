@@ -86,11 +86,11 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label>Current Address</label>
+                                <label>Abroad Address</label>
                                 <textarea class="form-control" v-model="overview.current_address"></textarea>
                             </div>
                             <div class="mb-3">
-                                <label>Permanent Address</label>
+                                <label>Philippine Address</label>
                                 <textarea class="form-control" v-model="overview.permanent_address"></textarea>
                             </div>
                         </div>

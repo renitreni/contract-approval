@@ -42,7 +42,11 @@ class OfficialCaseController extends Controller
                                         <span class='badge bg-danger text-2xl'>Suspended</span>
                                        </a>";
             }
-
+            if ($data['status'] == 'warning') {
+                $data['status_btn'] = "<a href='#' class='btn-name'>
+                                        <span class='badge bg-warning text-2xl'>Warning</span>
+                                       </a>";
+            }
             return $data;
         })->make(true);
     }

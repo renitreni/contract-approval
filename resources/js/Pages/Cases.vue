@@ -60,7 +60,7 @@
                                     <input type="number" class="form-control" v-model="overview.atnsia_no">
                                 </div>
                                 <div class="col-sm-12 col-lg-6">
-                                    <label>Case Officer</label>
+                                    <label>Case Officer / Welfare</label>
                                     <input type="text" class="form-control" v-model="overview.case_officer">
                                 </div>
                             </div>
@@ -69,6 +69,7 @@
                                     <label>Status</label>
                                     <select id="select2-status" class="form-control select2">
                                         <option value=""> -- None --</option>
+                                        <option value="warning">Warning</option>
                                         <option value="suspended">Suspended</option>
                                         <option value="lifted">Lifted</option>
                                     </select>

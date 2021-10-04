@@ -6,3 +6,7 @@
 
 // fontawesome
 @import "~@fortawesome/fontawesome-free/css/all.css";
+
+.select2-dropdown--below {
+    z-index: 9999 !important;
+}

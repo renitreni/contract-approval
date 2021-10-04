@@ -15501,3 +15501,6 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.select2-dropdown--below {
+  z-index: 9999 !important;
+}

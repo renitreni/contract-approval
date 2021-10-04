@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CaseManagementController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DataListController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\OfficialCaseController;
 use App\Http\Controllers\WorkerController;
@@ -49,6 +50,12 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         Route::get('/', [EmployerController::class, 'index'])->name('employer')->middleware(['can:case-management']);
         Route::post('/store', [EmployerController::class, 'store'])->name('employer.store');
         Route::post('/table', [EmployerController::class, 'table'])->name('employer.table');
+    });
+
+    Route::prefix('employer')->group(function () {
+        Route::post('/agencies', [DataListController::class, 'agencies'])->name('list.agencies');
+        Route::post('/employers', [DataListController::class, 'employers'])->name('list.employers');
+        Route::post('/workers', [DataListController::class, 'workers'])->name('list.workers');
     });
 
     Route::prefix('contracts')->group(function () {

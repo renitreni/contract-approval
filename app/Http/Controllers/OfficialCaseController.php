@@ -11,15 +11,17 @@ use Yajra\DataTables\DataTables;
 
 class OfficialCaseController extends Controller
 {
-
     public function index(): \Inertia\Response
     {
         Inertia::setRootView('layouts/app');
 
         return Inertia::render('Cases', [
             'data' => [
-                'cases_store_link' => route('cases.store'),
-                'cases_table_link' => route('cases.table'),
+                'cases_store_link'    => route('cases.store'),
+                'cases_table_link'    => route('cases.table'),
+                'list_agencies_link'  => route('list.agencies'),
+                'list_employers_link' => route('list.employers'),
+                'list_workers_link'   => route('list.workers'),
             ],
         ]);
     }
@@ -28,8 +30,18 @@ class OfficialCaseController extends Controller
     {
         return DataTables::of(OfficialCase::all())->setTransformer(function ($value) {
             $data = collect($value)->toArray();
-            $data['suspension_date'] = Carbon::parse($data['suspension_date'])->format('F j, Y');
-            $data['full_name'] = $data['worker']['last_name'].", ".$data['worker']['first_name']." ".$data['worker']['middle_name'];
+            $data['suspension_date_display'] = Carbon::parse($data['suspension_date'])->format('F j, Y');
+            $worker = $data['worker'];
+            $data['full_name'] = $worker['last_name'].", ".$worker['first_name']." ".$worker['middle_name'];
+
+            $data['status_btn'] = "<a href='#' class='btn-name'>
+                                     <span class='badge bg-success'>Lifted</span>
+                                   </a>";
+            if ($data['status'] == 'suspended') {
+                $data['status_btn'] = "<a href='#' class='btn-name'>
+                                        <span class='badge bg-danger text-2xl'>Suspended</span>
+                                       </a>";
+            }
 
             return $data;
         })->make(true);
@@ -37,15 +49,21 @@ class OfficialCaseController extends Controller
 
     public function store(Request $request)
     {
-//        Employer::updateOrCreate(['id' => $request->has('id') ? $request->id : null],
-//            [
-//                'name'        => $request->name,
-//                'iqama'       => $request->iqama,
-//                'phone'       => $request->phone,
-//                'email'       => $request->email,
-//                'address'     => $request->address,
-//                'description' => $request->description,
-//            ]);
+        OfficialCase::updateOrCreate(['id' => $request->has('id') ? $request->id : null],
+            [
+                'status'          => $request->status,
+                'company_id'      => $request->company_id,
+                'suspension_date' => $request->suspension_date,
+                'lifted_date'     => $request->lifted_date,
+                'days_suspended'  => $request->days_suspended,
+                'employer_id'     => $request->employer_id,
+                'case_officer'    => $request->case_officer,
+                'worker_id'       => $request->worker_id,
+                'atnsia_no'       => $request->atnsia_no,
+                'complaint_id'    => $request->complaint_id,
+                'complaint'       => $request->complaint,
+                'remarks'         => $request->remarks,
+            ]);
 
         return ['success' => true];
     }

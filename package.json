@@ -32,6 +32,8 @@
         "@popperjs/core": "^2.9.2",
         "bootstrap": "^5.0.2",
         "bootstrap5": "^1.1.9",
-        "vue": "^3.1.4"
+        "select2": "^4.1.0-rc.0",
+        "vue": "^3.1.4",
+        "vue-select": "^3.13.0"
     }
 }

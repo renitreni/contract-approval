@@ -30,7 +30,7 @@
         </div>
 
         <!-- Company form -->
-        <div class="modal fade" id="employer-form-mdl" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        <div class="modal fade" id="employer-form-mdl" data-bs-backdrop="static" data-bs-keyboard="false"
              aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -40,35 +40,57 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex flex-column">
-                            <div class="d-flex flex-sm-column flex-lg-row">
-                                <div class="mb-3 flex-grow-1 me-4">
-                                    <label>Name</label>
-                                    <input type="text" class="form-control" v-model="overview.name">
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-6">
+                                    <label>Agency / Company</label>
+                                    <select id="select2-agencies" class="form-select select2"></select>
                                 </div>
-                                <div class="mb-3 flex-grow-1">
-                                    <label>IQAMA/National ID</label>
-                                    <input type="text" class="form-control" v-model="overview.iqama">
-                                </div>
-                            </div>
-                            <div class="d-flex flex-sm-column flex-lg-row">
-                                <div class="mb-3 flex-grow-1 me-4">
-                                    <label>Phone</label>
-                                    <input type="text" class="form-control" v-model="overview.phone">
-                                </div>
-                                <div class="mb-3 flex-grow-1">
-                                    <label>E-mail</label>
-                                    <input type="email" class="form-control" v-model="overview.email">
+                                <div class="col-sm-12 col-lg-6">
+                                    <label>Employer</label>
+                                    <select id="select2-employers" class="form-select select2"></select>
                                 </div>
                             </div>
-                            <div class="d-flex flex-column">
-                                <div class="mb-3 flex-grow-1 me-4">
-                                    <label>Address</label>
-                                    <input type="text" class="form-control" v-model="overview.address">
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-6">
+                                    <label>Worker</label>
+                                    <select id="select2-worker" class="form-select select2"></select>
                                 </div>
-                                <div class="mb-3 flex-grow-1">
-                                    <label>Description</label>
-                                    <textarea class="form-control" v-model="overview.description"></textarea>
+                                <div class="col-sm-12 col-lg-6">
+                                    <label>ATNSIA No.</label>
+                                    <input type="number" class="form-control" v-model="overview.atnsia_no">
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 mb-1">
+                                    <label>Status</label>
+                                    <select id="select2-status" class="form-control select2">
+                                        <option value=""> -- None --</option>
+                                        <option value="suspended">Suspended</option>
+                                        <option value="lifted">Lifted</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12 col-lg-6" v-if="overview.status == 'suspended'">
+                                    <label>Suspension Date</label>
+                                    <input type="date" class="form-control" v-model="overview.suspension_date">
+                                </div>
+                                <div class="col-sm-12 col-lg-6" v-if="overview.status == 'suspended'">
+                                    <label>No. Of Days Suspended</label>
+                                    <input type="number" class="form-control" v-model="overview.days_suspended">
+                                </div>
+                                <div class="col-sm-12 col-lg-6" v-if="overview.status == 'lifted'">
+                                    <label>Lifted Date</label>
+                                    <input type="date" class="form-control" v-model="overview.lifted_date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label>Nature of Complaint</label>
+                                <textarea class="form-control" v-model="overview.complaint"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label>Remarks</label>
+                                <textarea class="form-control" v-model="overview.remarks"></textarea>
                             </div>
                         </div>
                     </div>
@@ -85,11 +107,13 @@
 </template>
 
 <script>
+
 export default {
-    name: "Employer",
+    name: "Cases",
     props: ['data'],
     data() {
         return {
+            dt: null,
             overview: {
                 'status': '',
                 'company_id': '',
@@ -103,14 +127,15 @@ export default {
                 'complaint_id': '',
                 'complaint': '',
                 'remarks': '',
-                'title': 'New Employer',
+                'title': 'New Case',
             },
-            employerFormMdl: null,
+            caseFormMdl: null,
         }
     },
     methods: {
         showFormMdl() {
-            this.employerFormMdl.show();
+            this.caseFormMdl.show();
+            $('.select2').val('').trigger('change');
             this.overview = {
                 'status': '',
                 'company_id': '',
@@ -124,21 +149,26 @@ export default {
                 'complaint_id': '',
                 'complaint': '',
                 'remarks': '',
-                'title': 'New Employer',
+                'title': 'New Case',
             };
         },
         store() {
             var $this = this;
-            axios.post(this.data.employer_store_link, this.overview)
+            axios.post(this.data.cases_store_link, this.overview)
                 .then(function () {
                     $this.dt.draw();
                 });
+        },
+        select2Binder(id, value, label) {
+            $(id).append('<option value="' + value + '">' + label + '</option>');
+            $(id).val(value);
+            $(id).trigger('change');
         }
     },
     mounted() {
         const $this = this;
 
-        $this.employerFormMdl = new bootstrap.Modal(document.getElementById('employer-form-mdl'), {
+        $this.caseFormMdl = new bootstrap.Modal(document.getElementById('employer-form-mdl'), {
             keyboard: false
         });
 
@@ -152,11 +182,11 @@ export default {
             "order": [[0, "desc"]],
             "columns": [
                 {"data": "id", "name": "id", "title": "ID"},
-                {"data": "status", "name": "status", "title": "Status"},
+                {"data": "status_btn", "name": "status", "title": "Status"},
                 {"data": "company.name", "name": "company.name", "title": "Company"},
                 {"data": "company.type", "name": "company.type", "title": "Company Type"},
                 {"data": "employer.name", "name": "employer.name", "title": "Employer"},
-                {"data": "suspension_date", "name": "suspension_date", "title": "Suspension Date"},
+                {"data": "suspension_date_display", "name": "suspension_date", "title": "Suspension Date"},
                 {"data": "days_suspended", "name": "days_suspended", "title": "Days Suspended"},
                 {"data": "case_officer", "name": "case_officer", "title": "Case Officer"},
                 {"data": "full_name", "name": "worker.last_name", "title": "Worker"},
@@ -164,11 +194,63 @@ export default {
             ],
             drawCallback: function (settings) {
                 $('.btn-name').on('click', function () {
-                    $this.employerFormMdl.show();
+                    $this.caseFormMdl.show();
                     $this.overview = $this.dt.row($(this).parent().parent()).data();
                     $this.overview.title = "Edit Case"
+
+                    $this.select2Binder("#select2-agencies", $this.overview.company_id, $this.overview.company.name)
+                    $this.select2Binder("#select2-worker", $this.overview.worker_id, $this.overview.full_name)
+                    $this.select2Binder("#select2-employers", $this.overview.employer_id, $this.overview.employer.name)
+                    $('#select2-status').val($this.overview.status).trigger('change');
                 });
             }
+        });
+
+        $("#select2-agencies").select2({
+            allowClear: true,
+            placeholder: "-- Select Option --",
+            theme: "bootstrap-5",
+            ajax: {
+                url: $this.data.list_agencies_link,
+                dataType: 'json',
+                method: 'POST',
+            }
+        }).on('select2:select', function (e) {
+            $this.overview.company_id = e.params.data.id;
+        });
+
+        $("#select2-worker").select2({
+            allowClear: true,
+            placeholder: "-- Select Option --",
+            theme: "bootstrap-5",
+            ajax: {
+                url: $this.data.list_workers_link,
+                dataType: 'json',
+                method: 'POST',
+            }
+        }).on('select2:select', function (e) {
+            $this.overview.worker_id = e.params.data.id;
+        });
+
+        $("#select2-employers").select2({
+            allowClear: true,
+            placeholder: "-- Select Option --",
+            theme: "bootstrap-5",
+            ajax: {
+                url: $this.data.list_employers_link,
+                dataType: 'json',
+                method: 'POST',
+            }
+        }).on('select2:select', function (e) {
+            $this.overview.employer_id = e.params.data.id;
+        });
+
+        $("#select2-status").select2({
+            allowClear: true,
+            placeholder: "-- Select Option --",
+            theme: "bootstrap-5",
+        }).on('select2:select', function (e) {
+            $this.overview.status = e.params.data.id;
         });
     }
 }

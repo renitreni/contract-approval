@@ -60,9 +60,15 @@
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>
+
 <script src="{{ asset('vendor/alertifyjs/alertify.min.js') }}"></script>
 <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('vendor/datatables/js/dataTables.bootstrap5.min.js') }}"></script>
+
+<!-- CDN -->
+<link rel="stylesheet" href="{{ asset('vendor/select2-bs5/index.min.css') }}" />
+<script src="{{ asset('vendor/select2-bs5/index.min.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('vendor/select2-bs5/bs5-theme.min.css') }}" />
 
 {{--SIDEBAR ACTION--}}
 <script>

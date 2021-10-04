@@ -188,7 +188,7 @@ export default {
             "columns": [
                 {"data": "id", "name": "id", "title": "ID"},
                 {"data": "status_btn", "name": "status", "title": "Status"},
-                {"data": "company.name", "name": "company.name", "title": "Company"},
+                {"data": "company.name", "name": "company.name", "title": "Agency / Company"},
                 {"data": "company.type", "name": "company.type", "title": "Company Type"},
                 {"data": "employer.name", "name": "employer.name", "title": "Employer"},
                 {"data": "suspension_date_display", "name": "suspension_date", "title": "Suspension Date"},

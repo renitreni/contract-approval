@@ -64,9 +64,9 @@ class DatabaseSeeder extends Seeder
         $bouncer->allow($admin)->to($roles);
         $bouncer->allow($admin)->everything();
 
-        Company::factory()->count(50)->create();
-        Worker::factory()->count(50)->create();
-        Employer::factory()->count(50)->create();
-        OfficialCase::factory()->count(200)->create();
+//        Company::factory()->count(50)->create();
+//        Worker::factory()->count(50)->create();
+//        Employer::factory()->count(50)->create();
+//        OfficialCase::factory()->count(200)->create();
     }
 }

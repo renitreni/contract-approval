@@ -16,6 +16,7 @@ class OfficialCase extends Model
         'suspension_date',
         'lifted_date',
         'days_suspended',
+        'days_warning',
         'employer_id',
         'case_officer',
         'worker_id',

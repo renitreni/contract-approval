@@ -20,6 +20,7 @@ class CreateOfficialCasesTable extends Migration
             $table->date('suspension_date')->nullable();
             $table->date('lifted_date')->nullable();
             $table->integer('days_suspended')->nullable();
+            $table->integer('days_warning')->nullable();
             $table->integer('employer_id')->nullable();
             $table->string('case_officer')->nullable();
             $table->string('worker_id')->nullable();

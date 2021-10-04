@@ -82,6 +82,10 @@
                                     <label>No. Of Days Suspended</label>
                                     <input type="number" class="form-control" v-model="overview.days_suspended">
                                 </div>
+                                <div class="col-sm-12 col-lg-6" v-if="overview.status == 'warning'">
+                                    <label>No. Of Days Warning</label>
+                                    <input type="number" class="form-control" v-model="overview.days_warning">
+                                </div>
                                 <div class="col-sm-12 col-lg-6" v-if="overview.status == 'lifted'">
                                     <label>Lifted Date</label>
                                     <input type="date" class="form-control" v-model="overview.lifted_date">
@@ -125,6 +129,7 @@ export default {
                 'suspension_date': '',
                 'lifted_date': '',
                 'days_suspended': '',
+                'days_warning': '',
                 'employer_id': '',
                 'case_officer': '',
                 'worker_id': '',
@@ -191,8 +196,6 @@ export default {
                 {"data": "company.name", "name": "company.name", "title": "Agency / Company"},
                 {"data": "company.type", "name": "company.type", "title": "Company Type"},
                 {"data": "employer.name", "name": "employer.name", "title": "Employer"},
-                {"data": "suspension_date_display", "name": "suspension_date", "title": "Suspension Date"},
-                {"data": "days_suspended", "name": "days_suspended", "title": "Days Suspended"},
                 {"data": "case_officer", "name": "case_officer", "title": "Case Officer"},
                 {"data": "full_name", "name": "worker.last_name", "title": "Worker"},
                 {"data": "atnsia_no", "name": "worker.atnsia_no", "title": "Case No."},

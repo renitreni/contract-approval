@@ -31,6 +31,7 @@
                         <span class="badge bg-warning" v-if="item.status == 'warning'">Warning</span>
                         <span class="badge bg-success" v-if="item.status == 'lifted'">Lifted</span>
                     </h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Case Officer / Welof: {{ item.case_officer }}</h6>
                     <h6 class="card-subtitle mb-2 text-muted">Company: {{ item.company.name }}</h6>
                     <h6 class="card-subtitle mb-2 text-muted">Employer: {{ item.employer.name }}</h6>
                     <h6 class="card-subtitle mb-2 text-muted">Worker: {{ item.worker.last_name }}, {{ item.worker.first_name }}</h6>

@@ -8,9 +8,9 @@
                     <div class="d-table-cell align-middle">
                         <div class="text-center mt-4">
                             <img src="{{ asset('img/polo-logo-thumb.png') }}" width="20%">
-                            <h1 class="h2 mt-3">C.C.M.</h1>
+                            <h1 class="h2 mt-3">C.M.D</h1>
                             <p class="lead">
-                                Contract & Case Management
+                                Case Management Deployment
                             </p>
                         </div>
                         <div class="card">

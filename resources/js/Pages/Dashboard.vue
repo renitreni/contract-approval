@@ -27,15 +27,15 @@
                 <div class="card-body">
                     <h5 class="card-title">Case No. {{ item.atnsia_no }}</h5>
                     <h6 class="card-subtitle mb-2">
-                        <span class="badge bg-danger" v-if="item.status == 'suspended'">Suspended</span>
+                        <span class="badge bg-danger"  v-if="item.status == 'suspended'">Suspended</span>
                         <span class="badge bg-warning" v-if="item.status == 'warning'">Warning</span>
                         <span class="badge bg-success" v-if="item.status == 'lifted'">Lifted</span>
                     </h6>
                     <h6 class="card-subtitle mb-2 text-muted">Case Officer / Welof: {{ item.case_officer }}</h6>
-                    <h6 class="card-subtitle mb-2 text-muted">Company: {{ item.company.name }}</h6>
-                    <h6 class="card-subtitle mb-2 text-muted">Employer: {{ item.employer.name }}</h6>
-                    <h6 class="card-subtitle mb-2 text-muted">Worker: {{ item.worker.last_name }}, {{ item.worker.first_name }}</h6>
-                    <p class="card-text">{{ item.complaint }}</p>
+                    <h6 class="card-subtitle mb-2 text-muted">             Company: {{ item.company.name }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">            Employer: {{ item.employer.name }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">              Worker: {{ item.worker.last_name }}, {{ item.worker.first_name }}</h6>
+                    <p class="card-text mt-2">{{ item.complaint }}</p>
                 </div>
             </div>
         </div>

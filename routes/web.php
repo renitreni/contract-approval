@@ -5,6 +5,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DataListController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\OfficialCaseController;
+use App\Http\Controllers\SamplePageController;
 use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -14,16 +15,33 @@ use App\Http\Controllers\MyContractController;
 use App\Http\Controllers\SettingsPrivacyController;
 use \App\Http\Controllers\ContractController;
 
+
+
+Route::group(['middleware' => ['web']], function () {
+    Route::prefix('sample')->group(function () {
+        Route::get('/', [SamplePageController::class, 'index'])->name('sample');
+    });
+});
+
 Route::get('/', function () {
     return redirect()->route('home');
 });
 
 Auth::routes();
 
+Route::prefix('listing')->group(function () {
+    Route::post('/agencies', [DataListController::class, 'agencies'])->name('list.agencies');
+    Route::post('/employers', [DataListController::class, 'employers'])->name('list.employers')->middleware('auth');
+    Route::post('/workers', [DataListController::class, 'workers'])->name('list.workers')->middleware('auth');
+});
+
+Route::post('/company/search', [DashboardController::class, 'searchCompany'])->name('search.company');
+
 Route::group(['middleware' => ['web', 'auth']], function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('home')->middleware(['can:home']);
         Route::post('/contract/search', [DashboardController::class, 'searchContract'])->name('search.contract');
+        Route::post('/case/search', [DashboardController::class, 'searchCase'])->name('search.case');
         Route::post('/case/search', [DashboardController::class, 'searchCase'])->name('search.case');
     });
 
@@ -49,12 +67,6 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         Route::get('/', [EmployerController::class, 'index'])->name('employer')->middleware(['can:case-management']);
         Route::post('/store', [EmployerController::class, 'store'])->name('employer.store');
         Route::post('/table', [EmployerController::class, 'table'])->name('employer.table');
-    });
-
-    Route::prefix('employer')->group(function () {
-        Route::post('/agencies', [DataListController::class, 'agencies'])->name('list.agencies');
-        Route::post('/employers', [DataListController::class, 'employers'])->name('list.employers');
-        Route::post('/workers', [DataListController::class, 'workers'])->name('list.workers');
     });
 
     Route::prefix('contracts')->group(function () {

@@ -50,4 +50,12 @@ class DashboardController extends Controller
 
         return $results->get()->toArray();
     }
+
+    public function searchCompany(Request $request)
+    {
+        return OfficialCase::query()
+            ->select('status')
+            ->where("company_id", $request->company_id)
+            ->where("status", 'suspended')->first();
+    }
 }

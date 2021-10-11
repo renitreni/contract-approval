@@ -112,6 +112,60 @@
                 </div>
             </div>
         </div>
+
+        <!-- Notifier Form-->
+        <div class="modal fade" id="notifier-form-mdl" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ overview.title }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex flex-column">
+                            <div class="row mb-2">
+                                <div class="col-auto">Email To:</div>
+                                <div class="col-auto fw-bold">
+                                    <label v-if="overview.company">
+                                        <i class="badge bg-info-dark">{{ overview.company.type }}</i>
+                                        {{ overview.company.name }}
+                                        &lt;{{ overview.company.email }}></label>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="mb-2">
+                                <label>Nature Of Complaint:</label>
+                                <p class="fw-bold">{{ overview.complaint }}</p>
+                            </div>
+                            <div class="mb-2">
+                                <label>Remarks:</label>
+                                <p class="fw-bold">{{ overview.remarks }}</p>
+                            </div>
+                            <div class="mb-2">
+                                <label>Status:</label>
+                                <p class="fw-bold text-capitalize bg-danger text-white p-2"
+                                   v-if="overview.status === 'suspended'">
+                                    {{ overview.status }} {{ overview.days_suspended }} Days
+                                </p>
+                                <p class="fw-bold text-capitalize bg-warning p-2"
+                                   v-else-if="overview.status === 'warning'">
+                                    {{ overview.status }} {{ overview.days_warning }} Days
+                                </p>
+                                <p class="fw-bold text-capitalize bg-success text-white p-2" v-else>
+                                    {{ overview.status }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="notify">Send
+                            Notification
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -140,6 +194,7 @@ export default {
                 'title': 'New Case',
             },
             caseFormMdl: null,
+            notifierFormMdl: null,
         }
     },
     methods: {
@@ -173,12 +228,22 @@ export default {
             $(id).append('<option value="' + value + '">' + label + '</option>');
             $(id).val(value);
             $(id).trigger('change');
+        },
+        notify() {
+            axios.post(this.data.case_notify_link, this.overview)
+                .then(function () {
+                    alertify.success('<label class="text-white">Notification has been Sent!</label>');
+                });
         }
     },
     mounted() {
         const $this = this;
 
         $this.caseFormMdl = new bootstrap.Modal(document.getElementById('employer-form-mdl'), {
+            keyboard: false
+        });
+
+        $this.notifierFormMdl = new bootstrap.Modal(document.getElementById('notifier-form-mdl'), {
             keyboard: false
         });
 
@@ -193,7 +258,7 @@ export default {
             "columns": [
                 {"data": "id", "name": "id", "title": "ID"},
                 {"data": "status_btn", "name": "status", "title": "Status"},
-                {"data": "company.name", "name": "company.name", "title": "Agency / Company"},
+                {"data": "company_name_display", "name": "company.name", "title": "Agency / Company"},
                 {"data": "company.type", "name": "company.type", "title": "Company Type"},
                 {"data": "employer.name", "name": "employer.name", "title": "Employer"},
                 {"data": "case_officer", "name": "case_officer", "title": "Case Officer"},
@@ -210,6 +275,12 @@ export default {
                     $this.select2Binder("#select2-worker", $this.overview.worker_id, $this.overview.full_name)
                     $this.select2Binder("#select2-employers", $this.overview.employer_id, $this.overview.employer.name)
                     $('#select2-status').val($this.overview.status).trigger('change');
+                });
+
+                $('.btn-notifier').click(function () {
+                    $this.notifierFormMdl.show();
+                    $this.overview = $this.dt.row($(this).parent().parent()).data();
+                    $this.overview.title = "Message Preview"
                 });
             }
         });

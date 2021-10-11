@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OfficialCaseRequest;
+use App\Mail\CaseNotifierMail;
 use App\Models\OfficialCase;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Yajra\DataTables\DataTables;
 
@@ -23,6 +25,7 @@ class OfficialCaseController extends Controller
                 'list_agencies_link'  => route('list.agencies'),
                 'list_employers_link' => route('list.employers'),
                 'list_workers_link'   => route('list.workers'),
+                'case_notify_link'    => route('cases.notify'),
             ],
         ]);
     }
@@ -31,31 +34,18 @@ class OfficialCaseController extends Controller
     {
         return DataTables::of(OfficialCase::all())->setTransformer(function ($value) {
             $data = collect($value)->toArray();
-            $data['suspension_date_display'] = Carbon::parse($data['suspension_date'])->format('F j, Y');
             $worker = $data['worker'];
-            $data['full_name'] = $worker['last_name'].", ".$worker['first_name']." ".$worker['middle_name'];
 
-            $data['status_btn'] = '<button type="button" class="btn btn-sm bg-success position-relative btn-name text-white">
-                            Lifted
-                            </button>';
+            $data['suspension_date_display'] = Carbon::parse($data['suspension_date'])->format('F j, Y');
+            $data['company_name_display'] = "<button class='btn btn-sm btn-info text-white btn-notifier'><i class='fas fa-envelope'></i></button> {$data['company']['name']}";
+            $data['full_name'] = $worker['last_name'].", ".$worker['first_name']." ".$worker['middle_name'];
+            $data['status_btn'] = '<button class="btn btn-sm bg-success position-relative btn-name text-white" type="button">Lifted</button>';
 
             if ($data['status'] == 'suspended') {
-                $data['status_btn'] = '<button type="button" class="btn btn-sm bg-danger position-relative btn-name text-white">
-                            Suspended
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
-                            ' . $data['days_suspended']. '
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
-                            </button>';
+                $data['status_btn'] = "<button class='btn btn-sm bg-danger position-relative btn-name text-white' type='button'>Suspended <span class=\"badge bg-secondary\">{$data['days_suspended']}</span></button>";
             }
             if ($data['status'] == 'warning') {
-                $data['status_btn'] = '<button type="button" class="btn btn-sm bg-warning position-relative btn-name">
-                            Warning
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
-                            ' . $data['days_warning']. '
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
-                            </button>';
+                $data['status_btn'] = "<button class=\"btn btn-sm bg-warning position-relative btn-name\" type=\"button\">Warning <span class=\"badge bg-secondary\">{$data['days_warning']}</span></button>";
             }
 
             return $data;
@@ -80,6 +70,13 @@ class OfficialCaseController extends Controller
                 'complaint'       => $request->complaint,
                 'remarks'         => $request->remarks,
             ]);
+
+        return ['success' => true];
+    }
+
+    public function sendNotification(Request $request)
+    {
+        Mail::to([$request->company['email']])->bcc([config('mail.from.address')])->send(new CaseNotifierMail($request));
 
         return ['success' => true];
     }

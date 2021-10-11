@@ -49,6 +49,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         Route::get('/', [OfficialCaseController::class, 'index'])->name('cases')->middleware(['can:case-management']);
         Route::post('/store', [OfficialCaseController::class, 'store'])->name('cases.store');
         Route::post('/table/companies', [OfficialCaseController::class, 'table'])->name('cases.table');
+        Route::post('/notify', [OfficialCaseController::class, 'sendNotification'])->name('cases.notify');
     });
 
     Route::prefix('company')->group(function () {

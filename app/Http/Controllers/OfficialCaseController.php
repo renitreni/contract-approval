@@ -76,7 +76,19 @@ class OfficialCaseController extends Controller
 
     public function sendNotification(Request $request)
     {
-        Mail::to([$request->company['email']])->bcc([config('mail.from.address')])->send(new CaseNotifierMail($request));
+        $cc = [];
+        if (isset($request->company['email'])) {
+            $cc[] = $request->company['email'];
+        }
+
+        if (isset($request->worker['email'])) {
+            $cc[] = $request->worker['email'];
+        }
+
+        Mail::to([$request->company['email']])
+            ->cc($cc)
+            ->bcc([config('mail.from.address')])
+            ->send(new CaseNotifierMail($request));
 
         return ['success' => true];
     }

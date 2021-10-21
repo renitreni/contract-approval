@@ -124,12 +124,29 @@
                     <div class="modal-body">
                         <div class="d-flex flex-column">
                             <div class="row mb-2">
-                                <div class="col-auto">Email To:</div>
-                                <div class="col-auto fw-bold">
-                                    <label v-if="overview.company">
-                                        <i class="badge bg-info-dark">{{ overview.company.type }}</i>
-                                        {{ overview.company.name }}
-                                        &lt;{{ overview.company.email }}></label>
+                                <div class="col-3">Email To:</div>
+                                <div class="col-auto">
+                                    <div class="col-auto fw-bold">
+                                        <label v-if="overview.company">
+                                            <i class="badge bg-info-dark">{{ overview.company.type }}</i>
+                                            {{ overview.company.name }}
+                                            &lt;{{ overview.company.email }}></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-3">CC To:</div>
+                                <div class="col-auto">
+                                    <div class="col-auto fw-bold">
+                                        <label v-if="overview.employer">
+                                            {{ overview.employer.name }}
+                                            &lt;{{ overview.employer.email }}></label>
+                                    </div>
+                                    <div class="col-auto fw-bold">
+                                        <label v-if="overview.worker">
+                                            {{ overview.worker.last_name }}, {{ overview.worker.first_name }}
+                                            &lt;{{ overview.worker.email }}></label>
+                                    </div>
                                 </div>
                             </div>
                             <hr>
